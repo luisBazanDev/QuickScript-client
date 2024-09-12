@@ -21,7 +21,7 @@ const LoginForm: React.FC = () => {
       <div className="mb-4">
         <Input
           className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray"
-          placeholder="Username"
+          placeholder="username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -30,7 +30,7 @@ const LoginForm: React.FC = () => {
       <div className="mb-6">
         <Input
           className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray"
-          placeholder="Enter your password"
+          placeholder="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -45,7 +45,7 @@ const LoginForm: React.FC = () => {
         <span className='text-quickscript_white'>Sign in</span>
       </Button>
       <div className="text-center mt-4">
-        <a href="#" className="text-sm text-quickscript_light_gray hover:underline">
+        <a href="#" className=" text-sm text-quickscript_light_gray hover:underline">
           Forgot your password?
         </a>
       </div>
