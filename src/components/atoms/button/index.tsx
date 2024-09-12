@@ -1,22 +1,22 @@
 import React from "react";
 
-function Button({
-  children,
-  onClick,
-  buttonType,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
+interface ButtonProps {
   buttonType: "icon" | "submit" | "primary" | "secondary";
-}) {
-  const type = {
-    icon: "button-icon",
-    submit: "button-submit",
-    primary: "button-primary",
-    secondary: "button-secondary",
-  };
-
-  return <div className={`${type}`}>{children}</div>;
+  onClick: () => void;
+  className?: string;
+  children: React.ReactNode;
 }
+
+const Button: React.FC<ButtonProps> = ({ buttonType, onClick, className, children }) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`btn-${buttonType} ${className}`}
+    >
+      {children}
+    </button>
+  );
+};
 
 export default Button;

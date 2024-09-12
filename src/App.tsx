@@ -1,14 +1,17 @@
-import { useState } from "react";
 import "./App.css";
-import Button from "./components/atoms/button";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
 
 function App() {
-  const [count, setCount] = useState(0);
 
-  return (
-    <>
-      <Button>a</Button>
-    </>
+  return(
+      <Router>
+        <Routes>
+          <Route path="/" element={<div>Home Page :v</div>}></Route>
+          <Route path="/login" element={<Login />}></Route>
+        </Routes>
+      </Router>
+
   );
 }
 
