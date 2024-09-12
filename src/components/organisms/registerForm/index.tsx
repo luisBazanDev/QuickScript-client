@@ -1,27 +1,32 @@
-import React, { useState } from 'react';
-import Input from '../../atoms/input';
-import Button from '../../atoms/button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import Input from "../../atoms/input";
+import Button from "../../atoms/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterForm: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [verifyPassword, setVerifyPassword] = useState('');
-  
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
+
   const handleSubmit = () => {
-    console.log('Logging in:', { username, password });
+    console.log("Logging in:", { username, password });
   };
 
   return (
     <div className="flex flex-col p-8 rounded-lg shadow-custom-green w-full max-w-md">
-      <div className='flex justify-start'>
-        <FontAwesomeIcon icon={faUserPlus}  className='text-xl pl-8 mt-2 text-quickscript_light_gray'/>
-        <h2 className="text-2xl font-bold text-quickscript_light_gray mb-6 pl-4 text-center">register</h2>
+      <div className="flex justify-start">
+        <FontAwesomeIcon
+          icon={faUserPlus}
+          className="text-xl pl-8 mt-2 text-quickscript_light_gray"
+        />
+        <h2 className="text-2xl font-bold text-quickscript_light_gray mb-6 pl-4 text-center">
+          Register
+        </h2>
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray"
+          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
           placeholder="Username"
           type="text"
           value={username}
@@ -30,7 +35,7 @@ const RegisterForm: React.FC = () => {
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray"
+          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
           placeholder="password"
           type="password"
           value={password}
@@ -39,7 +44,7 @@ const RegisterForm: React.FC = () => {
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray"
+          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
           placeholder="verify password"
           type="password"
           value={verifyPassword}
@@ -49,13 +54,21 @@ const RegisterForm: React.FC = () => {
       <Button
         buttonType="primary"
         onClick={handleSubmit}
-        className="w-full p-3 bg-quickscript_gray opacity-40 text-gray-900 rounded-lg font-semibold hover:bg-quickscript_green transition-colors"
+        className="w-full p-3 bg-quickscript_gray hover:bg-opacity-50 text-gray-900 rounded-lg font-semibold hover:bg-quickscript_green transition-all group active:scale-95 hover:scale-105"
       >
-        <FontAwesomeIcon icon={faUserPlus}  className='text-xl mr-2 p-0 text-quickscript_white'/> 
-        <span className='text-quickscript_white'>Sign up</span>
+        <FontAwesomeIcon
+          icon={faUserPlus}
+          className="text-xl mr-2 p-0 text-quickscript_light_gray group-hover:text-gray-300"
+        />
+        <span className="text-quickscript_light_gray group-hover:text-gray-300">
+          Sign up
+        </span>
       </Button>
       <div className="text-center mt-4">
-        <a href="#" className="justify-end text-sm text-quickscript_light_gray hover:underline">
+        <a
+          href="#"
+          className="justify-end text-sm text-quickscript_light_gray hover:underline"
+        >
           Login
         </a>
       </div>
