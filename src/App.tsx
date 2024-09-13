@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Test from "./pages/Test";
 import Game from "./pages/Game";
 import Config from "./pages/Config";
+import Stats from "./pages/Stats";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/test" element={<Test />}></Route>
         <Route path="/game" element={<Game />}></Route>
         <Route path="/config" element={<Config />}></Route>
+        <Route path="/stats" element={<Stats />}></Route>
       </Routes>
     </Router>
   );
