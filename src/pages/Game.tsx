@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEarthAmerica, faRedo, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEarthAmerica, faGear, faRedo, faUser } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../components/atoms/logo';
 import Modal from '../components/atoms/modal';
 
@@ -24,7 +24,7 @@ const Game: React.FC = () => {
         <Logo logoType='secondary'/>
         <a href="#">
           <FontAwesomeIcon 
-            icon={faUser} 
+            icon={faGear} 
             className='h-4 w-4 text-quickscript_light_gray' />
         </a>
         
