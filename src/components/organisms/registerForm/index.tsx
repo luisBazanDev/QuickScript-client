@@ -54,8 +54,7 @@ const RegisterForm: React.FC = () => {
       <Button
         buttonType="primary"
         onClick={handleSubmit}
-        className="w-full p-3 bg-quickscript_gray hover:bg-opacity-50 text-gray-900 rounded-lg font-semibold hover:bg-quickscript_green transition-all group active:scale-95 hover:scale-105"
-      >
+        >
         <FontAwesomeIcon
           icon={faUserPlus}
           className="text-xl mr-2 p-0 text-quickscript_light_gray group-hover:text-gray-300"
@@ -64,10 +63,10 @@ const RegisterForm: React.FC = () => {
           Sign up
         </span>
       </Button>
-      <div className="text-center mt-4">
+      <div className="flex justify-end text-center mt-4 mr-4">
         <a
-          href="#"
-          className="justify-end text-sm text-quickscript_light_gray hover:underline"
+          href="/login"
+          className="text-sm text-quickscript_light_gray hover:underline"
         >
           Login
         </a>
