@@ -141,15 +141,15 @@ function LbTyper() {
   return (
     <div className="w-full h-full relative" onClick={handleFocus}>
       <div
-        className={`absolute text-blue-600 font-mono text-4xl left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] ${
+        className={`absolute text-white font-mono text-xl left-[50%] top-[50%] -translate-x-[50%] shadow-md -translate-y-[50%] ${
           focus ? "hidden" : "flex"
         }`}
       >
-        {">>Click here<< 😻😻😻"}
+        {"Click here to focus"}
       </div>
       <div
-        className={`font-mono text-3xl flex gap-4 select-none flex-wrap ${
-          focus ? "" : "blur-sm"
+        className={`font-mono text-3xl flex gap-4 select-none flex-wrap transition-all ${
+          focus ? "" : "blur-md"
         }`}
       >
         {wordsRender.map((word, indexW) => {
