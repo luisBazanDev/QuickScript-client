@@ -1,6 +1,63 @@
 import { useEffect, useState } from "react";
 
 import "./style.css";
+import { LbChar, LbWord } from "../../../types";
+
+function compareWords(expected: string, actually: string): LbWord {
+  const chars: LbChar[] = [];
+
+  for (let i = 0; i < expected.length; i++) {
+    const letter = expected[i];
+
+    if (!actually || !actually[i]) {
+      chars.push({
+        letter,
+        void: true,
+        correct: false,
+        extra: false,
+      });
+      continue;
+    }
+
+    if (letter !== actually[i]) {
+      chars.push({
+        letter: actually[i],
+        void: false,
+        correct: false,
+        extra: true,
+      });
+      continue;
+    }
+
+    if (letter === actually[i]) {
+      chars.push({
+        letter,
+        void: false,
+        correct: true,
+        extra: false,
+      });
+      continue;
+    }
+  }
+
+  if (actually && actually.length > expected.length) {
+    for (let i = expected.length; i < actually.length; i++) {
+      chars.push({
+        letter: actually[i],
+        void: false,
+        correct: false,
+        extra: true,
+      });
+    }
+  }
+
+  return {
+    word: expected,
+    type: expected === actually ? "correct" : "error",
+    chars,
+  };
+}
+
 function LbTyper() {
   const textTest = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
 
@@ -18,6 +75,10 @@ function LbTyper() {
 
     typerMainFocus?.focus();
   };
+
+  const wordsRender = words.map((word, i) => {
+    return compareWords(word, text.split(" ")[i]);
+  });
 
   useEffect(() => {
     const typerMainFocus = document.getElementById("typer-main-focus");
@@ -40,7 +101,9 @@ function LbTyper() {
         setIndexWord(0);
         setText((t) => t + e.key);
       } else {
-        if (!e.key.match(/[a-zA-Z]/)) return;
+        if (!e.key.match(/[a-zA-Z]/) && ",./\\{}[]'\"".indexOf(e.key) === -1)
+          return;
+
         if (e.key.length > 1) return;
         setText((t) => t + e.key);
         setIndexWord((i) => i + 1);
@@ -66,6 +129,8 @@ function LbTyper() {
     typerMainFocus.addEventListener("focusout", focusout);
     typerMainFocus.addEventListener("focusin", focusin);
 
+    console.log(wordsRender);
+
     return () => {
       typerMainFocus.removeEventListener("keydown", keydown);
       typerMainFocus.removeEventListener("focusout", focusout);
@@ -76,43 +141,32 @@ function LbTyper() {
   return (
     <div className="w-full h-full" onClick={handleFocus}>
       <div
-        className={`font-mono text-3xl flex gap-4 select-none ${
+        className={`font-mono text-3xl flex gap-4 select-none flex-wrap ${
           focus ? "" : "blur-sm"
         }`}
       >
-        {words.map((word, indexW) => {
+        {wordsRender.map((word, indexW) => {
           return (
             <div
               className={`${
-                indexW >= indexText
-                  ? "word"
-                  : word === text.split(" ")[indexW]
-                  ? "word-correct"
-                  : "word-error"
+                word.type === "error" && indexW < indexText ? "word-error" : ""
               }`}
             >
-              {(indexW < indexText
-                ? text.split(" ")[indexW]
-                : indexW > indexText
-                ? word
-                : text.split(" ")[indexW].slice(0, indexWord) +
-                  word.slice(indexWord, word.length)
-              )
-                .split("")
-                .map((letter, indexL) => {
-                  return indexW === indexText && indexL === indexWord ? (
-                    <span
-                      key={indexL}
-                      className={`focus-letter text-white relative`}
-                    >
-                      {letter}
-                    </span>
-                  ) : (
-                    <span key={indexL} className="text-gray-400">
-                      {letter}
-                    </span>
-                  );
-                })}
+              {word.chars.map((char, indexC) => {
+                return (
+                  <span
+                    className={`${
+                      char.correct
+                        ? "text-green-300"
+                        : char.void
+                        ? "text-gray-400"
+                        : "text-red-400"
+                    } ${char.extra ? "text-red-900" : ""}`}
+                  >
+                    {char.letter}
+                  </span>
+                );
+              })}
             </div>
           );
         })}
