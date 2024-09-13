@@ -59,7 +59,8 @@ function compareWords(expected: string, actually: string): LbWord {
 }
 
 function LbTyper() {
-  const textTest = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
+  const textTest =
+    "El sistema permite practicar la escritura de textos comunes o código de programación en varios lenguajes, lo que lo hace útil para estudiantes, programadores y cualquier persona interesada en mejorar sus habilidades de escritura. Los usuarios recibirán estadísticas detalladas sobre su desempeño, que incluyen palabras por minuto (WPM), tiempo promedio de escritura, errores cometidos y otras métricas importantes. Se guarda esta información en una base de datos, lo que permite el análisis de los datos en el tiempo para evaluar el progreso individual.";
 
   const words = textTest.trim().split(" ");
 
@@ -101,8 +102,7 @@ function LbTyper() {
         setIndexWord(0);
         setText((t) => t + e.key);
       } else {
-        if (!e.key.match(/[a-zA-Z]/) && ",./\\{}[]'\"".indexOf(e.key) === -1)
-          return;
+        if (!e.key.match(/^[a-zA-Z0-9\W]+$/)) return;
 
         if (e.key.length > 1) return;
         setText((t) => t + e.key);
@@ -139,7 +139,14 @@ function LbTyper() {
   }, [indexWord, indexText]);
 
   return (
-    <div className="w-full h-full" onClick={handleFocus}>
+    <div className="w-full h-full relative" onClick={handleFocus}>
+      <div
+        className={`absolute text-white font-mono text-4xl left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] ${
+          focus ? "hidden" : "flex"
+        }`}
+      >
+        {">>Click here<< 😻😻😻"}
+      </div>
       <div
         className={`font-mono text-3xl flex gap-4 select-none flex-wrap ${
           focus ? "" : "blur-sm"
