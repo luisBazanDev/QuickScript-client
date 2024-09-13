@@ -150,7 +150,7 @@ function LbTyper() {
             <div
               className={`${
                 word.type === "error" && indexW < indexText ? "word-error" : ""
-              }`}
+              } relative`}
             >
               {word.chars.map((char, indexC) => {
                 return (
@@ -161,7 +161,11 @@ function LbTyper() {
                         : char.void
                         ? "text-gray-400"
                         : "text-red-400"
-                    } ${char.extra ? "text-red-900" : ""}`}
+                    } ${char.extra ? "text-red-900" : ""} ${
+                      indexW === indexText && indexC === indexWord
+                        ? "focus-letter"
+                        : ""
+                    }`}
                   >
                     {char.letter}
                   </span>
