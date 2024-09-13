@@ -141,7 +141,7 @@ function LbTyper() {
   return (
     <div className="w-full h-full relative" onClick={handleFocus}>
       <div
-        className={`absolute text-white font-mono text-4xl left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] ${
+        className={`absolute text-blue-600 font-mono text-4xl left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%] ${
           focus ? "hidden" : "flex"
         }`}
       >
