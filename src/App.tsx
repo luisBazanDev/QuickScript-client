@@ -15,6 +15,7 @@ function App() {
         <Route path="/register" element={<Register />}></Route>
         <Route path="/test" element={<Test />}></Route>
         <Route path="/game" element={<Game />}></Route>
+        <Route path="/config" element={<Config />}></Route>
       </Routes>
     </Router>
   );
