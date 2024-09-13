@@ -11,7 +11,7 @@ export default {
         quickscript_white:"#E9EFE6",
       },
       boxShadow: {
-        'custom-green': '0 -10px 15px -3px rgba(109, 190, 59, 0.5), 0 10px 15px -3px rgba(109, 190, 59, 0.5), 0 4px 6px -2px rgba(109, 190, 59, 0.25)', // Ajuste de la sombra
+        'custom-green': '0 10px 15px -3px rgba(109, 190, 59, 0.5), 0 4px 6px -2px rgba(109, 190, 59, 0.25)', // Ajuste de la sombra
       },
     },
   },

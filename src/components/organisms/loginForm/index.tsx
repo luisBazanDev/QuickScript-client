@@ -44,8 +44,7 @@ const LoginForm: React.FC = () => {
       <Button
         buttonType="primary"
         onClick={handleSubmit}
-        className="w-full p-3 bg-quickscript_gray hover:bg-opacity-50 text-gray-900 rounded-lg font-semibold hover:bg-quickscript_green transition-all group active:scale-95 hover:scale-105"
-      >
+        >
         <FontAwesomeIcon
           icon={faRightToBracket}
           className="text-2xl mr-2 p-0 text-quickscript_light_gray group-hover:text-gray-300"
@@ -54,12 +53,12 @@ const LoginForm: React.FC = () => {
           Sign in
         </span>
       </Button>
-      <div className="text-center mt-4">
-        <a
-          href="#"
-          className="text-sm text-quickscript_light_gray hover:underline"
-        >
+      <div className="flex justify-between mt-4">
+        <a href="#" className="text-sm text-quickscript_light_gray hover:underline">
           Forgot your password?
+        </a>
+        <a href="/register" className="text-sm text-quickscript_light_gray hover:underline">
+          Register
         </a>
       </div>
     </div>
