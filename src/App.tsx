@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Test from "./pages/Test";
 import Game from "./pages/Game";
+import Config from "./pages/Config";
 
 function App() {
   return (
