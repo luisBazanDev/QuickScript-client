@@ -13,11 +13,7 @@ class Client {
   private declare api: any;
   private declare timeout: number;
 
-  constructor(config: {
-    url: string;
-    params?: Record<string, any>;
-    data?: any;
-  }) {
+  constructor(config: { params?: Record<string, any>; data?: any }) {
     this.authorization = localStorage.getItem("token") || "";
     this.basePath = backendUrl;
     this.api = api.create({
@@ -36,7 +32,7 @@ class Client {
     let path = this.basePath + options.url;
 
     let headers = {
-      Authorization: this.authorization,
+      "x-access-token": this.authorization,
       "Content-type": "application/json",
     };
 
@@ -58,7 +54,7 @@ class Client {
     let path = this.basePath + options.url;
 
     let headers = {
-      Authorization: this.authorization,
+      "x-access-token": this.authorization,
       "Content-type": "application/json",
     };
 
@@ -80,7 +76,7 @@ class Client {
     let path = this.basePath + options.url;
 
     let headers = {
-      Authorization: this.authorization,
+      "x-access-token": this.authorization,
       "Content-type": "application/json",
     };
 
