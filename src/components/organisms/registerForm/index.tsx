@@ -18,16 +18,16 @@ const RegisterForm: React.FC = () => {
       <div className="flex justify-start">
         <FontAwesomeIcon
           icon={faUserPlus}
-          className="text-xl pl-8 mt-2 text-quickscript_light_gray"
+          className="text-xl pl-8 mt-1 text-quickscript_light_gray"
         />
-        <h2 className="text-2xl font-bold text-quickscript_light_gray mb-6 pl-4 text-center">
+        <h2 className="text-xl font-bold text-quickscript_light_gray mb-6 pl-2 text-center">
           Register
         </h2>
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
-          placeholder="Username"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          placeholder="username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -35,7 +35,7 @@ const RegisterForm: React.FC = () => {
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
           placeholder="password"
           type="password"
           value={password}
@@ -44,7 +44,7 @@ const RegisterForm: React.FC = () => {
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-10 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
           placeholder="verify password"
           type="password"
           value={verifyPassword}
@@ -57,9 +57,9 @@ const RegisterForm: React.FC = () => {
         >
         <FontAwesomeIcon
           icon={faUserPlus}
-          className="text-xl mr-2 p-0 text-quickscript_light_gray group-hover:text-gray-300"
+          className="text-xl mr-2 p-0 text-quickscript_white opacity-40"
         />
-        <span className="text-quickscript_light_gray group-hover:text-gray-300">
+        <span className="text-quickscript_white opacity-40 group-hover:text-gray-300">
           Sign up
         </span>
       </Button>

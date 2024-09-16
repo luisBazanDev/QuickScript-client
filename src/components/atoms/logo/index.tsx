@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKeyboard } from "@fortawesome/free-solid-svg-icons";
+import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
 
 interface LogoProps {
   logoType: "primary" | "secondary";
