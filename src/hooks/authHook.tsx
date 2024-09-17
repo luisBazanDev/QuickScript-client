@@ -16,7 +16,7 @@ export function useAuth() {
   ): Promise<boolean> => {
     const data = await loginRequest(username, password);
     if (data) {
-      context.setToken(data.token);
+      context.setToken(data.access_token);
       context.setUsername(data.username);
       return true;
     } else {
@@ -30,7 +30,7 @@ export function useAuth() {
   ): Promise<boolean> => {
     const data = await loginRequest(username, password);
     if (data) {
-      context.setToken(data.token);
+      context.setToken(data.access_token);
       context.setUsername(data.username);
       return true;
     } else {

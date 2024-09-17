@@ -3,13 +3,22 @@ import Input from "../../atoms/input";
 import Button from "../../atoms/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../../../hooks/authHook";
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const { login } = useAuth();
 
-  const handleSubmit = () => {
-    console.log("Logging in:", { username, password });
+  const handleSubmit = async () => {
+    const response = await login(username, password);
+
+    if (!response) {
+      console.log("Invalid username or password");
+      setError("Invalid username or password");
+      return;
+    }
   };
 
   return (
@@ -24,6 +33,11 @@ const LoginForm: React.FC = () => {
         </h2>
       </div>
       <div className="mb-4">
+        {error && (
+          <div className="border border-red-500 bg-red-200 text-red-500 py-2 w-10/12 mb-3 mx-auto">
+            {error}
+          </div>
+        )}
         <Input
           className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
           placeholder="username"
@@ -41,10 +55,7 @@ const LoginForm: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <Button
-        buttonType="primary"
-        onClick={handleSubmit}
-        >
+      <Button buttonType="primary" onClick={handleSubmit}>
         <FontAwesomeIcon
           icon={faRightToBracket}
           className="text-2xl mr-2 p-0 text-quickscript_white opacity-40 hover:text-quickscript_white"
@@ -54,10 +65,16 @@ const LoginForm: React.FC = () => {
         </span>
       </Button>
       <div className="flex justify-between mt-4">
-        <a href="#" className="text-sm text-quickscript_light_gray hover:underline">
+        <a
+          href="#"
+          className="text-sm text-quickscript_light_gray hover:underline"
+        >
           Forgot your password?
         </a>
-        <a href="/register" className="text-sm text-quickscript_light_gray hover:underline">
+        <a
+          href="/register"
+          className="text-sm text-quickscript_light_gray hover:underline"
+        >
           Register
         </a>
       </div>

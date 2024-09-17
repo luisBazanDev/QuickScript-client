@@ -1,4 +1,4 @@
-import { Context, createContext, useState } from "react";
+import { createContext, useState } from "react";
 
 type AuthConextType = {
   username: string;
@@ -7,32 +7,27 @@ type AuthConextType = {
   setToken: (token: string | null) => void;
 };
 
-const [username, setUsername] = useState<string>("");
-const [token, setTokenState] = useState<string | null>(
-  localStorage.getItem("token")
-);
-
-const setToken = (token: string | null) => {
-  setTokenState(token);
-  if (token) {
-    localStorage.setItem("token", token);
-  } else {
-    localStorage.removeItem("token");
-  }
-};
-
-const AuthContext: Context<AuthConextType> = createContext<AuthConextType>({
-  username,
-  setUsername,
-  token,
-  setToken,
-});
+const AuthContext = createContext<AuthConextType | null>(null);
 
 export function AuthConextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [username, setUsername] = useState<string>("");
+  const [token, setTokenState] = useState<string | null>(
+    localStorage.getItem("token")
+  );
+
+  const setToken = (token: string | null) => {
+    setTokenState(token);
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
