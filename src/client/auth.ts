@@ -40,3 +40,17 @@ export async function registerRequest(username: string, password: string) {
     return null;
   }
 }
+
+export async function getUserRequest() {
+  const client = new Client({});
+
+  try {
+    const response = await client.postRaw({
+      url: "/api/v1/authenticate",
+    });
+
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+}
