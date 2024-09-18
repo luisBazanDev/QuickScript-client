@@ -82,7 +82,7 @@ const Game: React.FC = () => {
               : "Other"}
           </button>
         </div>
-        <div className="w-full max-w-3xl p-4 rounded-md shadow-md mb-4">
+        <div className="w-full max-w-3xl p-4 rounded-md mb-4 h-64 relative">
           <LbTyper />
         </div>
         <div className="w-full flex justify-center">

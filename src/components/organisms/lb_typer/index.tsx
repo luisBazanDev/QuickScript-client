@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import "./style.css";
 import { LbChar, LbWord } from "../../../types";
@@ -68,12 +68,13 @@ function LbTyper() {
   const [focus, setFocus] = useState(false);
   const [indexWord, setIndexWord] = useState(0);
   const [indexText, setIndexText] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null); 
+
+  const WORDS_PER_LINE = 7; // words per line to scroll
 
   const handleFocus = (e: React.MouseEvent) => {
     const typerMainFocus = document.getElementById("typer-main-focus");
-
     e.preventDefault();
-
     typerMainFocus?.focus();
   };
 
@@ -91,7 +92,6 @@ function LbTyper() {
     typerMainFocus.removeEventListener("focusin", () => {});
 
     const keydown = (e: KeyboardEvent) => {
-      // Ignore if the key is not a letter
       if (e.key === "Backspace") {
         if (indexWord > 0) {
           setIndexWord((i) => i - 1);
@@ -112,24 +112,19 @@ function LbTyper() {
 
     const focusout = () => {
       setTimeout(() => {
-        // Check if the element is focused
         if (!document.activeElement?.id.includes("typer-main-focus")) {
           setFocus(false);
         }
       }, 300);
-      console.log("focus out");
     };
 
     const focusin = () => {
       setFocus(true);
-      console.log("focus in");
     };
 
     typerMainFocus.addEventListener("keydown", keydown);
     typerMainFocus.addEventListener("focusout", focusout);
     typerMainFocus.addEventListener("focusin", focusin);
-
-    console.log(wordsRender);
 
     return () => {
       typerMainFocus.removeEventListener("keydown", keydown);
@@ -137,6 +132,15 @@ function LbTyper() {
       typerMainFocus.removeEventListener("focusin", focusin);
     };
   }, [indexWord, indexText]);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    if (indexText > 0 && indexText % WORDS_PER_LINE === 0) {
+      container.scrollTop += container.clientHeight / 5; 
+    }
+  }, [indexText]);
 
   return (
     <div className="w-full h-full relative" onClick={handleFocus}>
@@ -148,25 +152,28 @@ function LbTyper() {
         {"Click here to focus"}
       </div>
       <div
-        className={`font-mono text-3xl flex gap-4 select-none flex-wrap transition-all ${
+        ref={containerRef}
+        className={`no-scrollbar font-mono text-3xl flex gap-4 select-none flex-wrap transition-all w-full max-w-3xl p-4 rounded-md mb-4 h-64 relative overflow-y-auto overflow-x-hidden scroll-smooth ${
           focus ? "" : "blur-md"
         }`}
       >
         {wordsRender.map((word, indexW) => {
           return (
             <div
-              className={`${
+              key={`word-${indexW}`}
+              className={`word-${indexW} ${
                 word.type === "error" && indexW < indexText ? "word-error" : ""
               } relative`}
             >
               {word.chars.map((char, indexC) => {
                 return (
                   <span
+                    key={`char-${indexW}-${indexC}`}
                     className={`${
                       char.correct
-                        ? "text-green-300"
+                        ? "text-quickscript_white"
                         : char.void
-                        ? "text-gray-400"
+                        ? "text-quickscript_light_gray"
                         : "text-red-400"
                     } ${char.extra ? "text-red-900" : ""} ${
                       indexW === indexText && indexC === indexWord

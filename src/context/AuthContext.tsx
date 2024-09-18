@@ -28,9 +28,10 @@ export function AuthContextProvider({
     }
   };
 
-  useEffect(() => {
-        setToken('sadasgfasrfafasdas');
-  }, []);
+  /*useEffect(() => {
+          setToken('sadasgfasrfafasdas');
+    }, []);*/
+
 
   return (
     <AuthContext.Provider
