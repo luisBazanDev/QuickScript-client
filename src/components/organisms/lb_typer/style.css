@@ -1,22 +1,22 @@
 .focus-letter::before {
-  content: "";
-  width: 2px;
-  @apply h-full bg-yellow-100 inline absolute;
-  animation: blink 1s infinite;
-}
-
-.word-error {
-  @apply underline text-red-500;
-}
-
-@keyframes blink {
-  0% {
-    opacity: 1;
+    content: "";
+    width: 2px;
+    @apply h-full bg-yellow-100 inline absolute;
+    animation: blink 1s infinite;
   }
-  50% {
-    opacity: 0;
+  
+  .word-error {
+    @apply underline text-red-500;
   }
-  100% {
-    opacity: 1;
+  
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
-}

@@ -6,7 +6,7 @@ import { ScatterChart } from '@mui/x-charts/ScatterChart';
 import { useDataContext } from '../context/Data';
 
 const Stats: React.FC = () => {
-    const { data, loading, extra } = useDataContext();
+    const { data, loading} = useDataContext();
   
     return (
       <div className="min-h-screen h-screen overflow-hidden flex flex-col items-center bg-quickscript_dark_gray">
