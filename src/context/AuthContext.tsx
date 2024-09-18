@@ -1,15 +1,15 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
-type AuthConextType = {
+type AuthContextType = {
   username: string;
   setUsername: (username: string) => void;
   token: string | null;
   setToken: (token: string | null) => void;
 };
 
-const AuthContext = createContext<AuthConextType | null>(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthConextProvider({
+export function AuthContextProvider({
   children,
 }: {
   children: React.ReactNode;
@@ -27,6 +27,10 @@ export function AuthConextProvider({
       localStorage.removeItem("token");
     }
   };
+
+  useEffect(() => {
+        setToken('sadasgfasrfafasdas');
+  }, []);
 
   return (
     <AuthContext.Provider

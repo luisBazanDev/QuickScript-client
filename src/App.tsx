@@ -1,12 +1,12 @@
 import "./App.css";
-import { AuthConextProvider } from "./context/AuthContext";
+import { AuthContextProvider } from "./context/AuthContext";
 import Router from "./Router";
 
 function App() {
   return (
-    <AuthConextProvider>
+    <AuthContextProvider>
       <Router />
-    </AuthConextProvider>
+    </AuthContextProvider>
   );
 }
 
