@@ -68,7 +68,7 @@ function LbTyper() {
   const [focus, setFocus] = useState(false);
   const [indexWord, setIndexWord] = useState(0);
   const [indexText, setIndexText] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null); 
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const WORDS_PER_LINE = 7; // words per line to scroll
 
@@ -137,8 +137,17 @@ function LbTyper() {
     const container = containerRef.current;
     if (!container) return;
 
-    if (indexText > 0 && indexText % WORDS_PER_LINE === 0) {
-      container.scrollTop += container.clientHeight / 5; 
+    const word = document.querySelector(`.word-${indexText}`);
+
+    if (word) {
+      const absWordTop = word.getClientRects().item(0)?.top;
+      const absContainerTop = container.getClientRects().item(0)?.top;
+
+      if (!absWordTop || !absContainerTop) return;
+
+      if (absWordTop > absContainerTop) {
+        container.scrollTop += absWordTop - absContainerTop;
+      }
     }
   }, [indexText]);
 
@@ -189,7 +198,12 @@ function LbTyper() {
           );
         })}
       </div>
-      <input type="text" className="opacity-0" id="typer-main-focus" />
+      <input
+        type="text"
+        className="opacity-0"
+        id="typer-main-focus"
+        autoComplete="false"
+      />
     </div>
   );
 }
