@@ -8,7 +8,8 @@ export function useAuth() {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-  const isLogged = !!context.token;
+  const { token, setToken, username, setUsername } = context;
+  const isLogged = !!token;
 
   const login = async (
     username: string,
@@ -16,8 +17,8 @@ export function useAuth() {
   ): Promise<boolean> => {
     const data = await loginRequest(username, password);
     if (data) {
-      context.setToken(data.access_token);
-      context.setUsername(data.username);
+      setToken(data.access_token);
+      setUsername(data.username);
       return true;
     } else {
       return false;
@@ -30,8 +31,8 @@ export function useAuth() {
   ): Promise<boolean> => {
     const data = await loginRequest(username, password);
     if (data) {
-      context.setToken(data.access_token);
-      context.setUsername(data.username);
+      setToken(data.access_token);
+      setUsername(data.username);
       return true;
     } else {
       return false;
@@ -39,12 +40,13 @@ export function useAuth() {
   };
 
   const logout = () => {
-    context.setToken(null);
-    context.setUsername("");
+    setToken(null);
+    setUsername("");
   };
 
   return {
     isLogged,
+    token,
     login,
     register,
     logout,
