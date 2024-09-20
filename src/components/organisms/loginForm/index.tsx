@@ -26,9 +26,9 @@ const LoginForm: React.FC = () => {
       <div className="flex justify-start">
         <FontAwesomeIcon
           icon={faRightToBracket}
-          className="text-2xl pl-8 mt-1 text-quickscript_light_gray"
+          className="text-2xl pl-8 mt-1 text-icon-color"
         />
-        <h2 className="text-xl font-bold text-quickscript_light_gray mb-6 pl-2 text-center">
+        <h2 className="text-xl font-bold text-icon-color mb-6 pl-2 text-center">
           Login
         </h2>
       </div>
@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
           </div>
         )}
         <Input
-          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-input-color placeholder-icon-color focus:outline-icon-colory focus:outline-none text-white"
           placeholder="username"
           type="text"
           value={username}
@@ -48,7 +48,7 @@ const LoginForm: React.FC = () => {
       </div>
       <div className="mb-6">
         <Input
-          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-input-color placeholder-icon-color focus:outline-icon-color focus:outline-none text-white"
           placeholder="password"
           type="password"
           value={password}
@@ -58,22 +58,22 @@ const LoginForm: React.FC = () => {
       <Button buttonType="primary" onClick={handleSubmit}>
         <FontAwesomeIcon
           icon={faRightToBracket}
-          className="text-2xl mr-2 p-0 text-quickscript_white opacity-40 hover:text-quickscript_white"
+          className="text-2xl mr-2 p-0 text-text-color opacity-40 hover:text-text-color"
         />
-        <span className="text-quickscript_white opacity-40 hover:text-quickscript_white">
+        <span className="text-text-color opacity-40 hover:text-text-color">
           Sign in
         </span>
       </Button>
       <div className="flex justify-between mt-4">
         <a
           href="#"
-          className="text-sm text-quickscript_light_gray hover:underline"
+          className="text-sm text-icon-color hover:underline"
         >
           Forgot your password?
         </a>
         <a
           href="/register"
-          className="text-sm text-quickscript_light_gray hover:underline"
+          className="text-sm text-icon-color hover:underline"
         >
           Register
         </a>

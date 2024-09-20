@@ -251,7 +251,7 @@ function LbTyper() {
   return (
     <div className="w-full h-full relative" onClick={handleFocus}>
       <div
-        className={`absolute text-white font-mono text-xl left-[50%] top-[50%] -translate-x-[50%] shadow-md -translate-y-[50%] ${
+        className={`absolute text-text-color font-mono text-xl left-[50%] top-[50%] -translate-x-[50%] shadow-md -translate-y-[50%] ${
           focus ? "hidden" : "flex"
         }`}
       >
@@ -277,10 +277,10 @@ function LbTyper() {
                     key={`char-${indexW}-${indexC}`}
                     className={`${
                       char.correct
-                        ? "text-quickscript_white"
+                        ? "text-text-color"
                         : char.void
-                        ? "text-quickscript_light_gray"
-                        : "text-red-400"
+                        ? "text-icon-color"
+                        : "text-red-700"
                     } ${char.extra ? "text-red-900" : ""} ${
                       indexW === indexText && indexC === indexWord
                         ? "focus-letter"
