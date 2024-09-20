@@ -8,7 +8,8 @@ export const useSession = () => {
     throw new Error("useSession must be used within a SessionProvider");
   }
 
-  const { start, text, session, addError, addRegister, startTime } = context;
+  const { start, text, session, addError, addRegister, startTime, duration } =
+    context;
 
   const restart = () => {
     window.location.reload();
@@ -22,5 +23,6 @@ export const useSession = () => {
     addError,
     addRegister,
     startTime,
+    duration,
   };
 };

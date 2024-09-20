@@ -12,12 +12,16 @@ import Logo from "../components/atoms/logo";
 import Modal from "../components/atoms/modal";
 import LbTyper from "../components/organisms/lb_typer";
 import { useSession } from "../hooks/sessionHook";
+import { formatTime } from "../utils";
+
+import "./game.css";
 
 const Game: React.FC = () => {
   const [language, setLanguage] = useState("es");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { restart } = useSession();
+  const { restart, startTime, duration } = useSession();
+  const [countDown, setCountDown] = useState<number>(duration ?? 30);
 
   const handleLanguageChange = (language: string) => {
     setLanguage(language);
@@ -32,6 +36,14 @@ const Game: React.FC = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (startTime === null) return;
+      setCountDown((c) => c - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [startTime]);
 
   return (
     <div className="min-h-screen h-screen overflow-hidden flex flex-col items-center bg-quickscript_dark_gray">
@@ -75,21 +87,32 @@ const Game: React.FC = () => {
         </div>
       </header>
       <main className="flex flex-col items-center w-full flex-1 p-4">
-        <div className="w-full flex justify-center mb-4 ">
-          <FontAwesomeIcon
-            icon={faEarthAmerica}
-            className="h-4 w-4 mt-1 text-quickscript_light_gray mr-2"
-          />
+        <div className="flex w-full justify-between mb-4 max-w-3xl">
+          <div className="text-quickscript_light_gray">
+            <span>Countdown: </span>
+            <span
+              className={`text-quickscript_green text-xl ${
+                startTime ? "countdown_active" : ""
+              }`}
+            >
+              {formatTime(countDown)}
+            </span>
+          </div>
           <button
             onClick={() => setIsModalOpen(true)}
             className="appearance-none bg-transparent border-none text-quickscript_light_gray p-0 outline-none hover:underline"
           >
+            <FontAwesomeIcon
+              icon={faEarthAmerica}
+              className="h-4 w-4 mt-1 text-quickscript_light_gray mr-2"
+            />
             {language === "es"
               ? "Spanish"
               : language === "en"
               ? "English"
               : "Other"}
           </button>
+          <div></div>
         </div>
         <div className="w-full max-w-3xl p-4 rounded-md mb-4 h-64 relative">
           <LbTyper />
