@@ -9,24 +9,26 @@ export const sampleLanguage: Language = {
 export const sampleRegisters: Register[] = [
   {
     wpm: 65,
-    time: 120,
+    time: 60,
     total_words: 130,
+    errors: 5,
   },
   {
     wpm: 70,
-    time: 130,
+    time: 60,
     total_words: 140,
+    errors: 3,
   },
 ];
 
 export const sampleErrors: Error[] = [
   {
     amount_errors: 5,
-    time: 100,
+    time: 60,
   },
   {
     amount_errors: 3,
-    time: 110,
+    time: 60,
   },
 ];
 
