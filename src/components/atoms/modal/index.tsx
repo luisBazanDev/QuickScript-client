@@ -11,12 +11,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSelectLanguage }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center">
-      <div className="bg-quickscript_dark_gray rounded-lg p-6 w-80 text-quickscript_white">
+      <div className="bg-bg-color rounded-lg p-6 w-80 text-text-color">
         <h2 className="text-xl font-bold mb-4">Selecciona un idioma</h2>
         <ul>
           <li className="mb-2">
             <button
-              className="w-full text-center p-2 rounded hover:bg-quickscript_gray"
+              className="w-full text-center p-2 rounded hover:bg-input-color"
               onClick={() => onSelectLanguage('es')}
             >
               Spanish
@@ -24,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSelectLanguage }) => {
           </li>
           <li className="mb-2">
             <button
-              className="w-full text-center p-2 rounded hover:bg-quickscript_gray"
+              className="w-full text-center p-2 rounded hover:bg-input-color"
               onClick={() => onSelectLanguage('en')}
             >
               English
@@ -32,7 +32,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSelectLanguage }) => {
           </li>
           <li className="mb-2">
             <button
-              className="w-full text-center p-2 rounded hover:bg-quickscript_gray"
+              className="w-full text-center p-2 rounded hover:bg-input-color"
               onClick={() => onSelectLanguage('other')}
             >
               Other
@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSelectLanguage }) => {
           </li>
         </ul>
         <button
-          className="mt-4 w-full p-2 bg-quickscript_dark_gray text-white rounded hover:bg-red-500"
+          className="mt-4 w-full p-2 bg-bg-color text-text-color rounded hover:bg-red-500"
           onClick={onClose}
         >
           Close

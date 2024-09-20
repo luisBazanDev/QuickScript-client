@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartSimple,
@@ -31,7 +31,7 @@ const Game: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen h-screen overflow-hidden flex flex-col items-center bg-quickscript_dark_gray">
+    <div className="min-h-screen h-screen overflow-hidden flex flex-col items-center bg-bg-color">
       <header className="w-full flex justify-between items-center p-4">
       <Logo logoType="secondary" />
       <div className="relative flex items-center">
@@ -39,16 +39,16 @@ const Game: React.FC = () => {
           <a href="#" onClick={toggleMenu}>
             <FontAwesomeIcon
               icon={faUser}
-              className="h-4 w-4 mr-3 text-quickscript_light_gray hover:text-quickscript_green transition-colors"
+              className="h-4 w-4 mr-3 text-icon-color hover:text-logo-color transition-colors"
             />
           </a>
           {isMenuOpen && (
-            <div className="absolute right-0 mt-2 w-36 bg-quickscript_gray rounded-md shadow-lg z-20">
-              <a href="/stats" className="block px-4 py-2 text-quickscript_white hover:text-quickscript_green">
+            <div className="absolute right-0 mt-2 w-36 bg-bg-color rounded-md shadow-lg z-20">
+              <a href="/stats" className="block px-4 py-2 text-icon-color hover:text-logo-color">
                 <FontAwesomeIcon icon={faChartSimple} className="mr-2" />
                 Estadísticas
               </a>
-              <a href="/logout" className="block px-4 py-2 text-quickscript_white hover:text-quickscript_green">
+              <a href="/logout" className="block px-4 py-2 text-icon-color hover:text-logo-color">
                 <FontAwesomeIcon icon={faSignOut} className="mr-2" />
                 Logout
               </a>
@@ -56,10 +56,10 @@ const Game: React.FC = () => {
           )}
         </div>
         <div>
-          <a href="#">
+          <a href="/config">
             <FontAwesomeIcon
               icon={faGear}
-              className="h-4 w-4 text-quickscript_light_gray hover:text-quickscript_green transition-colors"
+              className="h-4 w-4 text-icon-color hover:text-logo-color transition-colors"
             />
           </a>
         </div>
@@ -69,11 +69,11 @@ const Game: React.FC = () => {
         <div className="w-full flex justify-center mb-4 ">
           <FontAwesomeIcon
             icon={faEarthAmerica}
-            className="h-4 w-4 mt-1 text-quickscript_light_gray mr-2"
+            className="h-4 w-4 mt-1 text-icon-color mr-2 hover:text-logo-color transition-colors"
           />
           <button
             onClick={() => setIsModalOpen(true)}
-            className="appearance-none bg-transparent border-none text-quickscript_light_gray p-0 outline-none hover:underline"
+            className="appearance-none bg-transparent border-none text-icon-color p-0 outline-none hover:underline"
           >
             {language === "es"
               ? "Spanish"
@@ -92,7 +92,7 @@ const Game: React.FC = () => {
           >
             <FontAwesomeIcon
               icon={faRedo}
-              className="h-6 w-6 text-quickscript_light_gray hover:text-quickscript_green"
+              className="h-6 w-6 text-icon-color hover:text-logo-color"
             />
           </button>
         </div>

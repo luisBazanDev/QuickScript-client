@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    @apply bg-quickscript_dark_gray;
+body {
+  @apply bg-bg-color;
 }
 
 html, body {
@@ -15,4 +15,29 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+/* index.css */
+:root {
+  --bg-color: #1C292F;
+  --text-color: #E9EFE6;
+  --icon-color: #1F5E6B;
+  --logo-color: #6DBE3B;
+  --input-color: #1B3238;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1C292F;
+  --text-color: #E9EFE6;
+  --icon-color: #1F5E6B;
+  --logo-color: #6DBE3B;
+  --input-color: #1B3238;
+}
+
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #212b43;
+  --icon-color: #62cfe6;
+  --logo-color: #f19dac;
+  --input-color: #ddeff3;
 }

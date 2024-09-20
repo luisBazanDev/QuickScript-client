@@ -31,9 +31,9 @@ const RegisterForm: React.FC = () => {
       <div className="flex justify-start">
         <FontAwesomeIcon
           icon={faUserPlus}
-          className="text-xl pl-8 mt-1 text-quickscript_light_gray"
+          className="text-xl pl-8 mt-1 text-icon-color"
         />
-        <h2 className="text-xl font-bold text-quickscript_light_gray mb-6 pl-2 text-center">
+        <h2 className="text-xl font-bold text-icon-color mb-6 pl-2 text-center">
           Register
         </h2>
       </div>
@@ -44,7 +44,7 @@ const RegisterForm: React.FC = () => {
           </div>
         )}
         <Input
-          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-input-color placeholder-icon-color focus:outline-icon-color focus:outline-none text-white"
           placeholder="username"
           type="text"
           value={username}
@@ -53,7 +53,7 @@ const RegisterForm: React.FC = () => {
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-input-color placeholder-icon-color focus:outline-icon-color focus:outline-none text-white"
           placeholder="password"
           type="password"
           value={password}
@@ -62,7 +62,7 @@ const RegisterForm: React.FC = () => {
       </div>
       <div className="mb-4">
         <Input
-          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-quickscript_gray placeholder-quickscript_light_gray focus:outline-quickscript_light_gray focus:outline-none text-white"
+          className="w-10/12 h-11 p-3 rounded-md mb-3 bg-input-color placeholder-icon-color focus:outline-icon-color focus:outline-none text-white"
           placeholder="verify password"
           type="password"
           value={verifyPassword}
@@ -72,16 +72,16 @@ const RegisterForm: React.FC = () => {
       <Button buttonType="primary" onClick={handleSubmit}>
         <FontAwesomeIcon
           icon={faUserPlus}
-          className="text-xl mr-2 p-0 text-quickscript_white opacity-40"
+          className="text-xl mr-2 p-0 text-text-color opacity-40"
         />
-        <span className="text-quickscript_white opacity-40 group-hover:text-gray-300">
+        <span className="text-text-color opacity-40 group-hover:text-gray-300">
           Sign up
         </span>
       </Button>
       <div className="flex justify-end text-center mt-4 mr-4">
         <a
           href="/login"
-          className="text-sm text-quickscript_light_gray hover:underline"
+          className="text-sm text-icon-color hover:underline"
         >
           Login
         </a>
