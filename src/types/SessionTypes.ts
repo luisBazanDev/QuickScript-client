@@ -38,3 +38,8 @@ export interface SessionContextType {
   text: string | null;
   startTime: number | null;
 }
+
+export interface UserType{
+  id: number;
+  username: string;
+}

@@ -1,4 +1,4 @@
-import { Session, Register, Error, Language } from '../types';
+import { Session, Register, Error, Language, UserType } from '../types';
 
 export const sampleLanguage: Language = {
   id: 1,
@@ -66,3 +66,8 @@ export const sampleSession: Omit<Session, "id"> = {
   registers: sampleRegisters,
   errors: sampleErrors,
 };
+
+export const sampleUser: UserType = {
+    id: 1,
+    username: "luisbazanramos" 
+}
