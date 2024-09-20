@@ -1,11 +1,20 @@
-import { Session, Register, Error, Language } from '../types';
+import { Session, Register, Error, Language, UserType } from '../types';
 
 export const sampleLanguage: Language = {
   id: 1,
-  name: "en",
+  name: "es",
   display_name: "Spanish",
 };
 
+export const sampleLanguage2: Language = {
+    id: 2,
+    name: "en",
+    display_name: "English",
+};
+
+/*
+Los registros se realizan each 3 seg, para evaluar las estadisticas por tic
+*/
 export const sampleRegisters: Register[] = [
   {
     wpm: 65,
@@ -21,6 +30,9 @@ export const sampleRegisters: Register[] = [
   },
 ];
 
+/*
+Los erros se toman cada 1 seg, siempre y cuando existan, sino, no existirán objetos
+*/
 export const sampleErrors: Error[] = [
   {
     amount_errors: 5,
@@ -32,8 +44,7 @@ export const sampleErrors: Error[] = [
   },
 ];
 
-export const mockSession: Omit<Session, "id"> = {
-  user_id: 1,
+export const sampleSession: Omit<Session, "id" | "user_id"> = {
   average_wpm: 67.5,
   language: sampleLanguage,
   precision: 98.2,
@@ -44,3 +55,8 @@ export const mockSession: Omit<Session, "id"> = {
   registers: sampleRegisters,
   errors: sampleErrors,
 };
+
+export const sampleUser: UserType = {
+    id: 1,
+    username: "luisbazanramos" 
+}

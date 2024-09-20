@@ -38,4 +38,12 @@ export interface SessionContextType {
   duration: number | null;
   text: string | null;
   startTime: number | null;
+  endTime: number | null;
+  setEndTime: (time: number) => void;
+  buildSession: () => void;
+}
+
+export interface UserType{
+  id: number;
+  username: string;
 }

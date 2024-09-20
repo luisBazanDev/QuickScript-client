@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartSimple,
@@ -20,8 +20,10 @@ const Game: React.FC = () => {
   const [language, setLanguage] = useState("es");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { restart, startTime, duration } = useSession();
+  const { restart, startTime, duration, is_finished, finish } = useSession();
   const [countDown, setCountDown] = useState<number>(duration ?? 30);
+
+  const isFinished = useRef(is_finished);
 
   const handleLanguageChange = (language: string) => {
     setLanguage(language);
@@ -29,7 +31,6 @@ const Game: React.FC = () => {
   };
 
   const handleReset = () => {
-    // restart the test
     restart();
   };
 
@@ -38,7 +39,18 @@ const Game: React.FC = () => {
   };
 
   useEffect(() => {
+    isFinished.current = is_finished;
+  }, [is_finished]);
+
+  useEffect(() => {
+    if (isFinished.current) return;
+    if (startTime === null) return;
+    if (countDown === 0) finish();
+  }, [countDown]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
+      if (isFinished.current) return;
       if (startTime === null) return;
       setCountDown((c) => c - 1);
     }, 1000);
