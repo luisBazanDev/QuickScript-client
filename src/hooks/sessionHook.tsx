@@ -1,34 +1,28 @@
-// useSession.tsx
+import { useContext } from "react";
+import SessionContext from "../context/SessionContext";
 
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Session } from '../types';
+export const useSession = () => {
+  const context = useContext(SessionContext);
 
-export const useSession = (token: string | null) => {
-  const [sessionData, setSessionData] = useState<Session[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  if (!context) {
+    throw new Error("useSession must be used within a SessionProvider");
+  }
 
-  useEffect(() => {
-    if (!token) return;
+  const { start, text, session, addError, addRegister, startTime, duration } =
+    context;
 
-    const fetchSessions = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('/api/v1/session/get', {
-          headers: {
-            'x-access-token': token,
-          },
-        });
-        setSessionData(response.data);
-      } catch (error) {
-        console.error('Error fetching sessions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const restart = () => {
+    window.location.reload();
+  };
 
-    fetchSessions();
-  }, [token]);
-
-  return { sessionData, loading };
+  return {
+    start,
+    text,
+    session,
+    restart,
+    addError,
+    addRegister,
+    startTime,
+    duration,
+  };
 };

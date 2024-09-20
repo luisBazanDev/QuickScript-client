@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 
 import "./style.css";
-import { LbChar, LbWord } from "../../../types";
+import { Error, LbChar, LbWord } from "../../../types";
+import { useSession } from "../../../hooks/sessionHook";
 
 function compareWords(expected: string, actually: string): LbWord {
   const chars: LbChar[] = [];
@@ -59,18 +60,21 @@ function compareWords(expected: string, actually: string): LbWord {
 }
 
 function LbTyper() {
-  const textTest =
-    "El sistema permite practicar la escritura de textos comunes o código de programación en varios lenguajes, lo que lo hace útil para estudiantes, programadores y cualquier persona interesada en mejorar sus habilidades de escritura. Los usuarios recibirán estadísticas detalladas sobre su desempeño, que incluyen palabras por minuto (WPM), tiempo promedio de escritura, errores cometidos y otras métricas importantes. Se guarda esta información en una base de datos, lo que permite el análisis de los datos en el tiempo para evaluar el progreso individual.";
+  const { text, addError, start, startTime, addRegister } = useSession();
 
-  const words = textTest.trim().split(" ");
+  if (!text) return null;
 
-  const [text, setText] = useState("");
+  const words = text.trim().split(" ");
+
+  const [currentText, setCurrentText] = useState("");
   const [focus, setFocus] = useState(false);
   const [indexWord, setIndexWord] = useState(0);
   const [indexText, setIndexText] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const WORDS_PER_LINE = 7; // words per line to scroll
+  const [currentError, setCurrentError] = useState<Error | null>(null);
+  const [typeLetter, setTypeLetter] = useState<boolean>(false);
+  const [typeWord, setTypeWord] = useState<boolean>(false);
+  const [wordStartTime, setWordStartTime] = useState<number | null>(null);
 
   const handleFocus = (e: React.MouseEvent) => {
     const typerMainFocus = document.getElementById("typer-main-focus");
@@ -79,9 +83,101 @@ function LbTyper() {
   };
 
   const wordsRender = words.map((word, i) => {
-    return compareWords(word, text.split(" ")[i]);
+    return compareWords(word, currentText.split(" ")[i]);
   });
 
+  // Check if the last word is complete
+  useEffect(() => {
+    if (!typeWord) return;
+
+    if (indexText === words.length - 1) {
+      // TODO: Finish logic
+      console.log("Finish");
+      return;
+    }
+
+    // Check if the last word is complete
+    const lastWord = compareWords(
+      words[indexText - 1],
+      currentText.split(" ")[indexText - 1]
+    );
+
+    let voids = 0;
+
+    lastWord.chars.forEach((char, index) => {
+      if (char.void) voids++;
+    });
+
+    if (currentError !== null) {
+      voids += currentError.amount_errors;
+      setCurrentError(null);
+    }
+
+    if (voids === 0) return;
+
+    addError({
+      amount_errors: voids,
+      time: Date.now(),
+    });
+  }, [typeWord]);
+
+  // Check if the last letter is correct
+  useEffect(() => {
+    if (!typeLetter) return;
+
+    const actualWord = compareWords(
+      words[indexText],
+      currentText.split(" ")[indexText]
+    );
+    console.log(actualWord.chars[indexWord - 1]);
+
+    if (!actualWord.chars[indexWord - 1]) return;
+
+    // It's not a error
+    if (actualWord.chars[indexWord - 1].correct) {
+      if (!currentError) return;
+
+      // Break the error chain
+      addError(currentError);
+      setCurrentError(null);
+      return;
+    }
+
+    // It's a bug?
+    if (actualWord.chars[indexWord - 1].void) return;
+
+    // It's a error
+    setCurrentError((e) =>
+      e === null
+        ? { amount_errors: 1, time: Date.now() }
+        : { amount_errors: e.amount_errors + 1, time: e.time }
+    );
+  }, [typeLetter]);
+
+  // Interval to calculate WPM
+  useEffect(() => {
+    if (startTime === null) return;
+
+    setWordStartTime(Date.now());
+
+    const interval = setInterval(() => {
+      if (!wordStartTime) return;
+
+      const time = (Date.now() - wordStartTime) / 1000;
+      const words = currentText.split(" ").length;
+      const wpm = (words / time) * 60;
+
+      addRegister({
+        wpm,
+        time,
+        total_words: words,
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [wordStartTime]);
+
+  // Logic to type
   useEffect(() => {
     const typerMainFocus = document.getElementById("typer-main-focus");
 
@@ -92,22 +188,30 @@ function LbTyper() {
     typerMainFocus.removeEventListener("focusin", () => {});
 
     const keydown = (e: KeyboardEvent) => {
-      if (e.key === "Backspace") {
-        if (indexWord > 0) {
-          setIndexWord((i) => i - 1);
-          setText((t) => t.slice(0, -1));
-        }
+      if (startTime === null) {
+        start();
+      }
+      setTypeLetter(false);
+      setTypeWord(false);
+      if (e.key === "Backspace" && indexWord > 0) {
+        setIndexWord((i) => i - 1);
+        setCurrentText((t) => t.slice(0, -1));
+
+        // none
       } else if (e.key === " ") {
         setIndexText((i) => i + 1);
         setIndexWord(0);
-        setText((t) => t + e.key);
+        setCurrentText((t) => t + e.key);
+        setTypeWord(true);
       } else {
         if (!e.key.match(/^[a-zA-Z0-9\W]+$/)) return;
 
         if (e.key.length > 1) return;
-        setText((t) => t + e.key);
+        setCurrentText((t) => t + e.key);
         setIndexWord((i) => i + 1);
+        setTypeLetter(true);
       }
+      console.log(currentError);
     };
 
     const focusout = () => {
@@ -202,7 +306,7 @@ function LbTyper() {
         type="text"
         className="opacity-0"
         id="typer-main-focus"
-        autoComplete="false"
+        autoComplete="off"
       />
     </div>
   );

@@ -1,0 +1,15 @@
+.countdown_active {
+  animation: countdown 1s linear infinite;
+}
+
+@keyframes countdown {
+  0% {
+    scale: 1.5;
+  }
+  30% {
+    scale: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartSimple,
@@ -11,11 +11,17 @@ import {
 import Logo from "../components/atoms/logo";
 import Modal from "../components/atoms/modal";
 import LbTyper from "../components/organisms/lb_typer";
+import { useSession } from "../hooks/sessionHook";
+import { formatTime } from "../utils";
+
+import "./game.css";
 
 const Game: React.FC = () => {
   const [language, setLanguage] = useState("es");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { restart, startTime, duration } = useSession();
+  const [countDown, setCountDown] = useState<number>(duration ?? 30);
 
   const handleLanguageChange = (language: string) => {
     setLanguage(language);
@@ -24,47 +30,62 @@ const Game: React.FC = () => {
 
   const handleReset = () => {
     // restart the test
+    restart();
   };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (startTime === null) return;
+      setCountDown((c) => c - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [startTime]);
+
   return (
     <div className="min-h-screen h-screen overflow-hidden flex flex-col items-center bg-bg-color">
       <header className="w-full flex justify-between items-center p-4">
-      <Logo logoType="secondary" />
-      <div className="relative flex items-center">
-        <div>
-          <a href="#" onClick={toggleMenu}>
-            <FontAwesomeIcon
-              icon={faUser}
-              className="h-4 w-4 mr-3 text-icon-color hover:text-logo-color transition-colors"
-            />
-          </a>
-          {isMenuOpen && (
-            <div className="absolute right-0 mt-2 w-36 bg-bg-color rounded-md shadow-lg z-20">
-              <a href="/stats" className="block px-4 py-2 text-icon-color hover:text-logo-color">
-                <FontAwesomeIcon icon={faChartSimple} className="mr-2" />
-                Estadísticas
-              </a>
-              <a href="/logout" className="block px-4 py-2 text-icon-color hover:text-logo-color">
-                <FontAwesomeIcon icon={faSignOut} className="mr-2" />
-                Logout
-              </a>
-            </div>
-          )}
+        <Logo logoType="secondary" />
+        <div className="relative flex items-center">
+          <div>
+            <a href="#" onClick={toggleMenu}>
+              <FontAwesomeIcon
+                icon={faUser}
+                className="h-4 w-4 mr-3 text-icon-color hover:text-logo-color transition-colors"
+              />
+            </a>
+            {isMenuOpen && (
+              <div className="absolute right-0 mt-2 w-36 bg-bg-color rounded-md shadow-lg z-20">
+                <a
+                  href="/stats"
+                  className="block px-4 py-2 text-icon-color hover:text-logo-color"
+                >
+                  <FontAwesomeIcon icon={faChartSimple} className="mr-2" />
+                  Estadísticas
+                </a>
+                <a
+                  href="/logout"
+                  className="block px-4 py-2 text-icon-color hover:text-logo-color"
+                >
+                  <FontAwesomeIcon icon={faSignOut} className="mr-2" />
+                  Logout
+                </a>
+              </div>
+            )}
+          </div>
+          <div>
+            <a href="/config">
+              <FontAwesomeIcon
+                icon={faGear}
+                className="h-4 w-4 text-icon-color hover:text-logo-color transition-colors"
+              />
+            </a>
+          </div>
         </div>
-        <div>
-          <a href="/config">
-            <FontAwesomeIcon
-              icon={faGear}
-              className="h-4 w-4 text-icon-color hover:text-logo-color transition-colors"
-            />
-          </a>
-        </div>
-      </div>
-    </header>
+      </header>
       <main className="flex flex-col items-center w-full flex-1 p-4">
         <div className="w-full flex justify-center mb-4 ">
           <FontAwesomeIcon
@@ -75,12 +96,17 @@ const Game: React.FC = () => {
             onClick={() => setIsModalOpen(true)}
             className="appearance-none bg-transparent border-none text-icon-color p-0 outline-none hover:underline"
           >
+            <FontAwesomeIcon
+              icon={faEarthAmerica}
+              className="h-4 w-4 mt-1 text-quickscript_light_gray mr-2"
+            />
             {language === "es"
               ? "Spanish"
               : language === "en"
               ? "English"
               : "Other"}
           </button>
+          <div></div>
         </div>
         <div className="w-full max-w-3xl p-4 rounded-md mb-4 h-64 relative">
           <LbTyper />
@@ -88,7 +114,7 @@ const Game: React.FC = () => {
         <div className="w-full flex justify-center">
           <button
             onClick={handleReset}
-            className="p-2 rounded-full transition-colors"
+            className="p-2 rounded-full transition-colors cursor-pointer z-0"
           >
             <FontAwesomeIcon
               icon={faRedo}
