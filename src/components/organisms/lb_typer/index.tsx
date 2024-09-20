@@ -204,6 +204,7 @@ function LbTyper() {
     typerMainFocus.removeEventListener("focusin", () => {});
 
     const keydown = (e: KeyboardEvent) => {
+      if (isFinished.current) return;
       if (startTime === null) {
         start();
       }
