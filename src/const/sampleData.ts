@@ -14,43 +14,58 @@ export const sampleLanguage2: Language = {
 
 export const sampleRegisters: Register[] = [
   {
-    wpm: 65,
-    time: 60,
-    total_words: 130,
+    wpm: 10,
+    time: 3,
+    total_words: 10,
   },
   {
-    wpm: 70,
-    time: 55,
-    total_words: 30,
+    wpm: 7,
+    time: 6,
+    total_words: 17,
   },
   {
-    wpm: 50,
-    time: 50,
+    wpm: 12,
+    time: 9,
+    total_words: 29,
+  },
+  {
+    wpm: 11,
+    time: 12,
     total_words: 40,
   },
   {
-    wpm: 55,
-    time: 45,
-    total_words: 60,
+    wpm: 10,
+    time: 15,
+    total_words: 51,
+  },
+  {
+    wpm: 12,
+    time: 18,
+    total_words: 63,
+  },
+  {
+    wpm: 8,
+    time: 21,
+    total_words: 71,
   },
 ];
 
 export const sampleErrors: Error[] = [
   {
     amount_errors: 5,
-    time: 10,
+    time: 2,
   },
   {
     amount_errors: 3,
-    time: 20,
+    time: 9,
   },
   {
     amount_errors: 7,
-    time: 30,
+    time: 18,
   },
   {
     amount_errors: 2,
-    time: 40,
+    time: 21,
   },
 ];
 
