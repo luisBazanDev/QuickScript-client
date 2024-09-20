@@ -60,7 +60,7 @@ function compareWords(expected: string, actually: string): LbWord {
 }
 
 function LbTyper() {
-  const { text, addError, start, startTime } = useSession();
+  const { text, addError, start, startTime, addRegister } = useSession();
 
   if (!text) return null;
 
@@ -74,6 +74,7 @@ function LbTyper() {
   const [currentError, setCurrentError] = useState<Error | null>(null);
   const [typeLetter, setTypeLetter] = useState<boolean>(false);
   const [typeWord, setTypeWord] = useState<boolean>(false);
+  const [wordStartTime, setWordStartTime] = useState<number | null>(null);
 
   const handleFocus = (e: React.MouseEvent) => {
     const typerMainFocus = document.getElementById("typer-main-focus");
@@ -88,7 +89,6 @@ function LbTyper() {
   // Check if the last word is complete
   useEffect(() => {
     if (!typeWord) return;
-    console.log("Check if the last word is complete", indexText);
 
     if (indexText === words.length - 1) {
       // TODO: Finish logic
@@ -154,6 +154,29 @@ function LbTyper() {
     );
   }, [typeLetter]);
 
+  // Interval to calculate WPM
+  useEffect(() => {
+    if (startTime === null) return;
+
+    setWordStartTime(Date.now());
+
+    const interval = setInterval(() => {
+      if (!wordStartTime) return;
+
+      const time = (Date.now() - wordStartTime) / 1000;
+      const words = currentText.split(" ").length;
+      const wpm = (words / time) * 60;
+
+      addRegister({
+        wpm,
+        time,
+        total_words: words,
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [wordStartTime]);
+
   // Logic to type
   useEffect(() => {
     const typerMainFocus = document.getElementById("typer-main-focus");
@@ -180,8 +203,6 @@ function LbTyper() {
         setIndexWord(0);
         setCurrentText((t) => t + e.key);
         setTypeWord(true);
-        // TODO: Save register
-        // start word typing timestamp
       } else {
         if (!e.key.match(/^[a-zA-Z0-9\W]+$/)) return;
 
