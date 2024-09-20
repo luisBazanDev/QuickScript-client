@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartSimple,
@@ -87,11 +87,11 @@ const Game: React.FC = () => {
         </div>
       </header>
       <main className="flex flex-col items-center w-full flex-1 p-4">
-        <div className="w-full flex justify-center mb-4 ">
-          <FontAwesomeIcon
-            icon={faEarthAmerica}
-            className="h-4 w-4 mt-1 text-icon-color mr-2 hover:text-logo-color transition-colors"
-          />
+        <div className="w-full flex justify-between mb-4 max-w-3xl">
+          <div className="">
+            <span className="text-text-color">Countdown: </span>
+            <span className="text-logo-color">{formatTime(countDown)}</span>
+          </div>
           <button
             onClick={() => setIsModalOpen(true)}
             className="appearance-none bg-transparent border-none text-icon-color p-0 outline-none hover:underline"
