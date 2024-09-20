@@ -3,6 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../components/atoms/logo';
 
+const sessionData: Session = {
+  id: 1,
+  user_id: 123,
+  average_wpm: 75,
+  language: 'English',
+  precision: 98,
+  min_wpm: 60,
+  max_wpm: 90,
+  start_time: 1633036800000,
+  end_time: 1633040400000,
+  registers: [],
+  errors: []
+};
+
 const Stats: React.FC = () => {
     return (
       <div className="min-h-screen h-screen overflow-hidden flex flex-col items-center bg-bg-color">
@@ -12,7 +26,6 @@ const Stats: React.FC = () => {
         </header>
         <main className="flex flex-col items-center w-full flex-1 p-4">
           <div className="w-full max-w-3xl p-4 rounded-md shadow-md mb-4 bg-bg-color">
-
           </div>
         </main>
       </div>
