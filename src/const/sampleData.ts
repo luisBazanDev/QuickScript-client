@@ -2,7 +2,7 @@ import { Session, Register, Error, Language } from '../types';
 
 export const sampleLanguage: Language = {
   id: 1,
-  name: "en",
+  name: "es",
   display_name: "Spanish",
 };
 
@@ -30,7 +30,7 @@ export const sampleErrors: Error[] = [
   },
 ];
 
-export const mockSession: Omit<Session, "id"> = {
+export const sampleSession: Omit<Session, "id"> = {
   user_id: 1,
   average_wpm: 67.5,
   language: sampleLanguage,
