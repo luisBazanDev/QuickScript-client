@@ -7,6 +7,14 @@ import { useSession } from "../../../hooks/sessionHook";
 function compareWords(expected: string, actually: string): LbWord {
   const chars: LbChar[] = [];
 
+  if (!expected) {
+    return {
+      word: expected,
+      type: "error",
+      chars: [],
+    };
+  }
+
   for (let i = 0; i < expected.length; i++) {
     const letter = expected[i];
 
@@ -74,7 +82,7 @@ function LbTyper() {
   const [currentError, setCurrentError] = useState<Error | null>(null);
   const [typeLetter, setTypeLetter] = useState<boolean>(false);
   const [typeWord, setTypeWord] = useState<boolean>(false);
-  const [wordStartTime, setWordStartTime] = useState<number | null>(null);
+  const [indexSpeed, setIndexSpeed] = useState<number>(0);
 
   const handleFocus = (e: React.MouseEvent) => {
     const typerMainFocus = document.getElementById("typer-main-focus");
@@ -129,7 +137,6 @@ function LbTyper() {
       words[indexText],
       currentText.split(" ")[indexText]
     );
-    console.log(actualWord.chars[indexWord - 1]);
 
     if (!actualWord.chars[indexWord - 1]) return;
 
@@ -158,24 +165,10 @@ function LbTyper() {
   useEffect(() => {
     if (startTime === null) return;
 
-    setWordStartTime(Date.now());
-
-    const interval = setInterval(() => {
-      if (!wordStartTime) return;
-
-      const time = (Date.now() - wordStartTime) / 1000;
-      const words = currentText.split(" ").length;
-      const wpm = (words / time) * 60;
-
-      addRegister({
-        wpm,
-        time,
-        total_words: words,
-      });
-    }, 1000);
+    const interval = setInterval(() => {}, 3 * 1000); // 3 seconds
 
     return () => clearInterval(interval);
-  }, [wordStartTime]);
+  }, [startTime]);
 
   // Logic to type
   useEffect(() => {
@@ -199,6 +192,7 @@ function LbTyper() {
 
         // none
       } else if (e.key === " ") {
+        if (indexText === words.length - 1) return;
         setIndexText((i) => i + 1);
         setIndexWord(0);
         setCurrentText((t) => t + e.key);
@@ -211,7 +205,6 @@ function LbTyper() {
         setIndexWord((i) => i + 1);
         setTypeLetter(true);
       }
-      console.log(currentError);
     };
 
     const focusout = () => {
