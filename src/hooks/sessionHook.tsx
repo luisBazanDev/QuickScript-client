@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import SessionContext from "../context/SessionContext";
 
 export const useSession = () => {
@@ -8,11 +8,27 @@ export const useSession = () => {
     throw new Error("useSession must be used within a SessionProvider");
   }
 
-  const { start, text, session, addError, addRegister, startTime, duration } =
-    context;
+  const {
+    start,
+    text,
+    session,
+    addError,
+    addRegister,
+    startTime,
+    duration,
+    setEndTime,
+    endTime,
+    buildSession,
+  } = context;
 
   const restart = () => {
     window.location.reload();
+  };
+
+  const finish = () => {
+    setEndTime(Date.now());
+
+    buildSession();
   };
 
   return {
@@ -24,5 +40,8 @@ export const useSession = () => {
     addRegister,
     startTime,
     duration,
+    finish,
+    buildSession,
+    is_finished: !!endTime,
   };
 };

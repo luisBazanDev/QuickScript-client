@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import "./style.css";
 import { Error, LbChar, LbWord } from "../../../types";
@@ -68,7 +68,8 @@ function compareWords(expected: string, actually: string): LbWord {
 }
 
 function LbTyper() {
-  const { text, addError, start, startTime, addRegister } = useSession();
+  const { text, addError, start, startTime, addRegister, finish, is_finished } =
+    useSession();
 
   if (!text) return null;
 
@@ -82,7 +83,17 @@ function LbTyper() {
   const [currentError, setCurrentError] = useState<Error | null>(null);
   const [typeLetter, setTypeLetter] = useState<boolean>(false);
   const [typeWord, setTypeWord] = useState<boolean>(false);
-  const [indexSpeed, setIndexSpeed] = useState<number>(0);
+  const [typeCounter, setTypeCounter] = useState<number>(0);
+  const typeCounterRef = useRef<number>(0);
+  const isFinished = useRef<boolean>(is_finished);
+
+  useEffect(() => {
+    typeCounterRef.current = typeCounter;
+  }, [typeCounter]);
+
+  useEffect(() => {
+    isFinished.current = is_finished;
+  }, [is_finished]);
 
   const handleFocus = (e: React.MouseEvent) => {
     const typerMainFocus = document.getElementById("typer-main-focus");
@@ -97,10 +108,10 @@ function LbTyper() {
   // Check if the last word is complete
   useEffect(() => {
     if (!typeWord) return;
+    if (isFinished) return;
 
     if (indexText === words.length - 1) {
-      // TODO: Finish logic
-      console.log("Finish");
+      finish();
       return;
     }
 
@@ -132,6 +143,7 @@ function LbTyper() {
   // Check if the last letter is correct
   useEffect(() => {
     if (!typeLetter) return;
+    if (isFinished) return;
 
     const actualWord = compareWords(
       words[indexText],
@@ -165,7 +177,18 @@ function LbTyper() {
   useEffect(() => {
     if (startTime === null) return;
 
-    const interval = setInterval(() => {}, 3 * 1000); // 3 seconds
+    const interval = setInterval(() => {
+      if (isFinished.current) return;
+      const wpm = typeCounterRef.current / 5 / (3 / 60);
+
+      console.log("WPM", wpm);
+      addRegister({
+        wpm,
+        time: Date.now(),
+        total_words: words.length,
+      });
+      setTypeCounter(0);
+    }, 3 * 1000); // 3 seconds
 
     return () => clearInterval(interval);
   }, [startTime]);
@@ -193,6 +216,7 @@ function LbTyper() {
         // none
       } else if (e.key === " ") {
         if (indexText === words.length - 1) return;
+        setTypeCounter((c) => c + 1);
         setIndexText((i) => i + 1);
         setIndexWord(0);
         setCurrentText((t) => t + e.key);
@@ -201,6 +225,7 @@ function LbTyper() {
         if (!e.key.match(/^[a-zA-Z0-9\W]+$/)) return;
 
         if (e.key.length > 1) return;
+        setTypeCounter((c) => c + 1);
         setCurrentText((t) => t + e.key);
         setIndexWord((i) => i + 1);
         setTypeLetter(true);
@@ -251,7 +276,7 @@ function LbTyper() {
   return (
     <div className="w-full h-full relative" onClick={handleFocus}>
       <div
-        className={`absolute text-text-color font-mono text-xl left-[50%] top-[50%] -translate-x-[50%] shadow-md -translate-y-[50%] ${
+        className={`absolute text-white font-mono text-xl left-[50%] top-[50%] -translate-x-[50%] shadow-md -translate-y-[50%] ${
           focus ? "hidden" : "flex"
         }`}
       >
