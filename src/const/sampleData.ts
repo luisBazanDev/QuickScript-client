@@ -6,27 +6,51 @@ export const sampleLanguage: Language = {
   display_name: "Spanish",
 };
 
+export const sampleLanguage2: Language = {
+    id: 2,
+    name: "en",
+    display_name: "English",
+};
+
 export const sampleRegisters: Register[] = [
   {
     wpm: 65,
-    time: 120,
+    time: 60,
     total_words: 130,
   },
   {
     wpm: 70,
-    time: 130,
-    total_words: 140,
+    time: 55,
+    total_words: 30,
+  },
+  {
+    wpm: 50,
+    time: 50,
+    total_words: 40,
+  },
+  {
+    wpm: 55,
+    time: 45,
+    total_words: 60,
   },
 ];
 
 export const sampleErrors: Error[] = [
   {
     amount_errors: 5,
-    time: 100,
+    time: 10,
   },
   {
     amount_errors: 3,
-    time: 110,
+    time: 20,
+  },
+  {
+    amount_errors: 7,
+    time: 30,
+  },
+  {
+    amount_errors: 2,
+    time: 40,
   },
 ];
 
