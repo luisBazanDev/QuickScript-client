@@ -1,15 +1,14 @@
-import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import { mockSession } from '../const/sampleData';
+import { sampleSession } from '../const/sampleData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import Logo from '../components/atoms/logo';
 
 const Stats: React.FC = () => {
-  const data = mockSession.registers.map((register, index) => ({
+  const data = sampleSession.registers.map((register, index) => ({
     name: (index + 1).toString(),
     wpm: register.wpm,
-    errors: register.errors,
+    errors: sampleSession.errors.find(error => error.time === register.time)?.amount_errors || 0,
   }));
 
   return (
@@ -25,19 +24,19 @@ const Stats: React.FC = () => {
               <p className="text-2xl">User</p>
             </div>
             <div className="mt-2 text-left font-bold text-logo-color">
-              <p className="text-xl text-text-color">Min WPM: {mockSession.min_wpm}</p>
-              <p className="text-xl text-text-color">Max WPM: {mockSession.max_wpm}</p>
+              <p className="text-xl text-text-color">Min WPM: {sampleSession.min_wpm}</p>
+              <p className="text-xl text-text-color">Max WPM: {sampleSession.max_wpm}</p>
             </div>
           </div>
           <div className="flex flex-row items-start p-4">
             <div className="text-left font-bold text-logo-color mr-4">
               <p className="text-2xl">WPM</p>
-              <p className="text-5xl font-bold text-text-color">{mockSession.average_wpm}</p>
+              <p className="text-5xl font-bold text-text-color">{sampleSession.average_wpm}</p>
               <p className="text-2xl mt-4">Acc</p>
-              <p className="text-5xl font-bold text-text-color">{mockSession.precision}%</p>
+              <p className="text-5xl font-bold text-text-color">{sampleSession.precision}%</p>
               <p className="text-logo-color font-bold text-xl mt-4">Test Type</p>
-              <p className="text-text-color font-bold text-xg">Time: {mockSession.registers[0].time}</p>
-              <p className="text-text-color font-bold text-xg">{mockSession.language.display_name}</p>
+              <p className="text-text-color font-bold text-xg">Time: {sampleSession.registers[0].time}</p>
+              <p className="text-text-color font-bold text-xg">{sampleSession.language.display_name}</p>
             </div>
             <div className="mt-4">
               <LineChart width={500} height={300} data={data}>

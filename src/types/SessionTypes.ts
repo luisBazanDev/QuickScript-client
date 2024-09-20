@@ -2,7 +2,6 @@ export interface Register {
   wpm: number;
   time: number;
   total_words: number;
-  errors: number;
 }
 
 export interface Error {
