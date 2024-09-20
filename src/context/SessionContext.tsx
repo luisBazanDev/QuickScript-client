@@ -1,51 +1,51 @@
-import { createContext, useState, useContext } from 'react';
-import axios from 'axios';
-import { useAuth } from '../hooks/authHook';
-import { SessionContextType, Session } from '../types'
+import { createContext, useState } from "react";
+import { SessionContextType, Error, Register } from "../types";
 
 const SessionContext = createContext<SessionContextType | null>(null);
 
-export const SessionProvider = ({ children }: { children: React.ReactNode }) => {
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const { token } = useAuth();
+export const SessionProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [errors, setErrors] = useState<Error[]>([]);
+  const [regisrters, setRegisters] = useState<Register[]>([]);
+  const [session, setSession] = useState<SessionContextType["session"]>(null);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const duration = 30; // CONSTANT
+  const [text, setText] = useState<string | null>(
+    "El sistema permite practicar la escritura de textos comunes o código de programación en varios lenguajes, lo que lo hace útil para estudiantes, programadores y cualquier persona interesada en mejorar sus habilidades de escritura. Los usuarios recibirán estadísticas detalladas sobre su desempeño, que incluyen palabras por minuto (WPM), tiempo promedio de escritura, errores cometidos y otras métricas importantes. Se guarda esta información en una base de datos, lo que permite el análisis de los datos en el tiempo para evaluar el progreso individual."
+  );
 
-  const getSessions = async (limit: number = 10) => {
-    if (!token) return;
-
-    try {
-      const response = await axios.get('/api/v1/session/get', {
-        headers: { 'x-access-token': token },
-        params: { limit },
-      });
-      setSessions(response.data);
-    } catch (error) {
-      console.error('Error al obtener sesiones:', error);
-    }
+  const addRegister = (register: Register) => {
+    setRegisters((r) => [...r, register]);
   };
 
-  const saveSession = async (sessionData: Omit<Session, 'id'>) => {
-    if (!token) return;
+  const addError = (error: Error) => {
+    if (!startTime || error.time < startTime) return;
+    error.time = (error.time - startTime) / 1000;
+    setErrors((e) => [...e, error]);
+  };
 
-    try {
-      await axios.post('/api/v1/session/save', sessionData, {
-        headers: { 'x-access-token': token },
-      });
-    } catch (error) {
-      console.error('Error al guardar la sesión:', error);
-    }
+  const start = () => {
+    setStartTime(Date.now());
   };
 
   return (
-    <SessionContext.Provider value={{ sessions, getSessions, saveSession }}>
+    <SessionContext.Provider
+      value={{
+        session,
+        addRegister,
+        addError,
+        start,
+        startTime,
+        duration,
+        text,
+      }}
+    >
       {children}
     </SessionContext.Provider>
   );
 };
 
-export const useSession = () => {
-  const context = useContext(SessionContext);
-  if (!context) {
-    throw new Error('useSession debe usarse dentro de un SessionProvider');
-  }
-  return context;
-};
+export default SessionContext;

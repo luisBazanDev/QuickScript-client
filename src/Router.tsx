@@ -5,6 +5,7 @@ import Config from "./pages/Config";
 import Stats from "./pages/Stats";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { SessionProvider } from "./context/SessionContext";
 
 function Router() {
   const { isLogged, logout } = useAuth();
@@ -33,7 +34,14 @@ function Router() {
       {isLogged ? (
         <RouterReact>
           <Routes>
-            <Route path="/" element={<Game />}></Route>
+            <Route
+              path="/"
+              element={
+                <SessionProvider>
+                  <Game />
+                </SessionProvider>
+              }
+            ></Route>
             <Route path="/config" element={<Config />}></Route>
             <Route path="/stats" element={<Stats />}></Route>
           </Routes>
