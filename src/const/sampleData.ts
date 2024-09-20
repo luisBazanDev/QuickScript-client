@@ -12,6 +12,9 @@ export const sampleLanguage2: Language = {
     display_name: "English",
 };
 
+/*
+Los registros se realizan each 3 seg, para evaluar las estadisticas por tic
+*/
 export const sampleRegisters: Register[] = [
   {
     wpm: 10,
@@ -50,6 +53,9 @@ export const sampleRegisters: Register[] = [
   },
 ];
 
+/*
+Los erros se toman cada 1 seg, siempre y cuando existan, sino, no existirán objetos
+*/
 export const sampleErrors: Error[] = [
   {
     amount_errors: 5,
@@ -69,8 +75,7 @@ export const sampleErrors: Error[] = [
   },
 ];
 
-export const sampleSession: Omit<Session, "id"> = {
-  user_id: 1,
+export const sampleSession: Omit<Session, "id" | "user_id"> = {
   average_wpm: 67.5,
   language: sampleLanguage,
   precision: 98.2,
