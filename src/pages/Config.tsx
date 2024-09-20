@@ -23,7 +23,7 @@ const Config = () => {
           <div className="border-t border-gray-300 w-full opacity-50 mb-4"></div>
           <div className="flex justify-between w-full">
             <span className="mr-2">Change theme</span>
-            <div className="w-1/3">
+            <div className="w-32">
               <Button buttonType="secondary" onClick={toggleTheme}>
                 Toggle Theme
               </Button>

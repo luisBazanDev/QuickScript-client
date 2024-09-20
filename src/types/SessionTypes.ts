@@ -41,3 +41,8 @@ export interface SessionContextType {
   setEndTime: (time: number) => void;
   buildSession: () => void;
 }
+
+export interface UserType{
+  id: number;
+  username: string;
+}

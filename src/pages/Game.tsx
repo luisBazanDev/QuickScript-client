@@ -108,10 +108,6 @@ const Game: React.FC = () => {
             onClick={() => setIsModalOpen(true)}
             className="appearance-none bg-transparent border-none text-icon-color p-0 outline-none hover:underline"
           >
-            <FontAwesomeIcon
-              icon={faEarthAmerica}
-              className="h-4 w-4 mt-1 text-quickscript_light_gray mr-2"
-            />
             {language === "es"
               ? "Spanish"
               : language === "en"
