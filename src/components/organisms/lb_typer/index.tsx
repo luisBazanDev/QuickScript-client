@@ -143,7 +143,7 @@ function LbTyper() {
   // Check if the last letter is correct
   useEffect(() => {
     if (!typeLetter) return;
-    if (isFinished) return;
+    if (isFinished.current) return;
 
     const actualWord = compareWords(
       words[indexText],

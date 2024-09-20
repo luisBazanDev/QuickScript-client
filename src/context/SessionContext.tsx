@@ -1,5 +1,6 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import { SessionContextType, Error, Register, Session } from "../types";
+import { saveSession } from "../client";
 
 const SessionContext = createContext<SessionContextType | null>(null);
 
@@ -32,7 +33,7 @@ export const SessionProvider = ({
     setStartTime(Date.now());
   };
 
-  const buildSession = () => {
+  const buildSession = async () => {
     console.log("Building session");
 
     console.log(startTime);
@@ -60,18 +61,22 @@ export const SessionProvider = ({
       errors: errors,
       start_time: startTime,
       end_time: Date.now(),
-      language: {
-        display_name: "Spanish",
-        id: 1,
-        name: "es",
-      },
+      language: "es",
       min_wpm: min_wpm,
       max_wpm: max_wpm,
       average_wpm: total_wpm / regisrters.length,
       precision: (total_letters - errors_amount) / total_letters,
     };
 
-    console.log("Session", session);
+    try {
+      const data = await saveSession(session);
+
+      if (data) window.location.href = "/stats#lastest";
+
+      console.log("Sesión guardada:", data);
+    } catch (error) {
+      console.error("Error al guardar la sesión:", error);
+    }
 
     setSession(null);
   };

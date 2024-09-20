@@ -19,7 +19,7 @@ export interface Session {
   id: number;
   user_id: number;
   average_wpm: number;
-  language: Language;
+  language: string;
   precision: number;
   min_wpm: number;
   max_wpm: number;

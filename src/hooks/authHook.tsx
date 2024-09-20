@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import { loginRequest } from "../client/auth";
+import { loginRequest, registerRequest } from "../client/auth";
 
 export function useAuth() {
   const context = useContext(AuthContext);
@@ -8,8 +8,7 @@ export function useAuth() {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-  const { token, setToken, username, setUsername } = context;
-  const isLogged = !!token;
+  const isLogged = !!context.token;
 
   const login = async (
     username: string,
@@ -17,8 +16,8 @@ export function useAuth() {
   ): Promise<boolean> => {
     const data = await loginRequest(username, password);
     if (data) {
-      setToken(data.access_token);
-      setUsername(data.username);
+      context.setToken(data.access_token);
+      context.setUsername(data.username);
       return true;
     } else {
       return false;
@@ -29,10 +28,10 @@ export function useAuth() {
     username: string,
     password: string
   ): Promise<boolean> => {
-    const data = await loginRequest(username, password);
+    const data = await registerRequest(username, password);
     if (data) {
-      setToken(data.access_token);
-      setUsername(data.username);
+      context.setToken(data.access_token);
+      context.setUsername(data.username);
       return true;
     } else {
       return false;
@@ -40,14 +39,12 @@ export function useAuth() {
   };
 
   const logout = () => {
-    setToken(null);
-    setUsername("");
+    context.setToken(null);
+    context.setUsername("");
   };
 
   return {
     isLogged,
-    token,
-    username,
     login,
     register,
     logout,

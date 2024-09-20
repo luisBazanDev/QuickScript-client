@@ -1,4 +1,4 @@
-import { Session, Register, Error, Language } from '../types';
+import { Session, Register, Error, Language } from "../types";
 
 export const sampleLanguage: Language = {
   id: 1,
@@ -7,9 +7,9 @@ export const sampleLanguage: Language = {
 };
 
 export const sampleLanguage2: Language = {
-    id: 2,
-    name: "en",
-    display_name: "English",
+  id: 2,
+  name: "en",
+  display_name: "English",
 };
 
 export const sampleRegisters: Register[] = [
@@ -57,7 +57,7 @@ export const sampleErrors: Error[] = [
 export const sampleSession: Omit<Session, "id"> = {
   user_id: 1,
   average_wpm: 67.5,
-  language: sampleLanguage,
+  language: sampleLanguage.name,
   precision: 98.2,
   min_wpm: 60,
   max_wpm: 75,

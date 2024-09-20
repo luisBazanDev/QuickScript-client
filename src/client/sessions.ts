@@ -15,7 +15,9 @@ export async function getSession(): Promise<Session[] | null> {
   }
 }
 
-export async function saveSession(sessionData: Omit<Session, "id">) {
+export async function saveSession(
+  sessionData: Omit<Session, "id" | "user_id">
+): Promise<boolean> {
   const client = new Client({});
 
   try {
@@ -23,7 +25,11 @@ export async function saveSession(sessionData: Omit<Session, "id">) {
       url: "/api/v1/session/save",
       data: sessionData,
     });
+
+    return true;
   } catch (error) {
     console.error("Error al guardar la sesión:", error);
+
+    return false;
   }
 }
